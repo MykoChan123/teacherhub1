@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, #8e6ee4, #88d3ce);
+                color: #333;
+                height: 100vh;
+            }
+            .container {
+                max-width: 500px;
+                margin: auto;
+                margin-top: 10vh;
+                background-color: white;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+                width: 90%;
+            }
+            h2 {
+                color: #4a2c85;
+                margin-bottom: 20px;
+                font-size: 24px;
+                text-align: center;
+            }
+            p {
+                line-height: 1.6;
+                text-align: center;
+                margin: 0 0 15px;
+            }
+            .footer {
+                margin-top: 30px;
+                font-size: 0.9em;
+                color: #777;
+                text-align: center;
+            }
+            .info-message {
+                color: #fff;
+                border: 2px solid #4a2c85;
+                border-radius: 5px;
+                padding: 15px 20px;
+                background-color: #4a2c85;
+                text-align: center;
+                font-size: 18px;
+                margin: 20px auto;
+                width: fit-content;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Hello, <b>{{ name }}!</b></h2>
+            
+            <p>Your email has been successfully confirmed. However, to ensure the security and authenticity of our platform, your submitted ID needs to be verified before you can log in.</p>
+            <div class="info-message">
+                Please note: Our admin will manually verify your submitted government ID to check if the name matches the one you provided during registration.
+            </div>
+            <p>Once your ID is verified and approved by the admin, your account will be activated, and you will receive a notification. After activation, you will be able to log in and access our platform.</p>
+            <p>We appreciate your patience and cooperation as we complete this process to keep our community secure.</p>
+            <div class="footer">
+                <p>Best regards,</p>
+                <p>M.CHAN</p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #8e6ee4, #88d3ce);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+            max-width: 500px;
+        }
+        .jumbotron-custom {
+            padding: 2rem;
+            border-radius: 1rem;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .form-control {
+            border-radius: 0.25rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            border-color: #ced4da;
+        }
+        .btn {
+            border-radius: 0.25rem;
+            font-weight: 600;
+            padding: 0.75rem;
+        }
+        .btn-primary {
+            background-color: #6e45e2;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #5a33c5;
+        }
+        .btn-secondary {
+            background-color: #9eb0c2;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #e2e6ea;
+        }
+        .btn-icon {
+            margin-right: 0.5rem;
+        }
+        h4 {
+            margin-bottom: 1.5rem;
+        }
+        .form-group select {
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="jumbotron jumbotron-custom">
+            <h4 class="font-weight-bold mb-4">Register</h4>
+            <h5 style="color: red;">{{ msg }}</h5>
+            
+            <form action="/signup" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope btn-icon"></i> Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname"><i class="fas fa-user btn-icon"></i> First Name</label>
+                    <input type="text" name="fname" id="fname" class="form-control" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lname"><i class="fas fa-user btn-icon"></i> Last Name</label>
+                    <input type="text" name="lname" id="lname" class="form-control" placeholder="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock btn-icon"></i> Password</label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="**********" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock btn-icon"></i> Confirm Password</label>
+                    <input type="password" name="confirm" id="password" class="form-control" placeholder="**********" required>
+                </div>
+                <div class="form-group">
+                    <label for="position"><i class="fas fa-briefcase btn-icon"></i> Select Position:</label>
+                    <select name="position" id="position" class="form-control">
+                        <option value="None">None</option>
+                        <option value="Teacher 1">Teacher I</option>
+                        <option value="Teacher 2">Teacher II</option>
+                        <option value="Teacher 3">Teacher III</option>
+                        <option value="Master Teacher">Master Teacher</option>
+                        <option value="Head Teacher">Head Teacher</option>
+                        <option value="Principal">Principal</option>
+                        {% for i in positions %}
+                        <option value="{{i.name}}"> {{i.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="advisory"><i class="fas fa-school btn-icon"></i> Select Advisory:</label>
+                    <select name="advisory" id="advisory" class="form-control">
+                        <option value="None">None</option>
+                        <option value="Kindergarten">Kindergarten</option>
+                        <option value="Grade 1">Grade 1</option>
+                        <option value="Grade 2">Grade 2</option>
+                        <option value="Grade 3">Grade 3</option>
+                        <option value="Grade 4">Grade 4</option>
+                        <option value="Grade 5">Grade 5</option>
+                        <option value="Grade 6">Grade 6</option>
+                        {% for i in advisories %}
+                        <option value="{{i.name}}">{{i.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-id-card btn-icon"></i> Any Valid Government ID</label>
+                    <input type="file" name="valid_id" id="password" class="form-control"  accept=".jpg, .png, .jpeg" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus btn-icon"></i> Register</button>
+            </form>
+            
+            <div class="mt-3">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary btn-block"><i class="fas fa-sign-in-alt btn-icon"></i> Login</a>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  
+  @media (max-width: 700px) {
+    .search-btn {
+      height: 5vh; 
+    }
+
+    
+    .d-flex {
+      flex-direction: column; 
+      align-items: flex-start; 
+    }
+
+    .form-container {
+      width: 100%; 
+      margin-bottom: 15px; 
+    }
+
+    .form-inline {
+      width: 100%;
+      margin-bottom: 15px; 
+    }
+
+    .form-inline input {
+      width: calc(100% - 100px); 
+      margin-right: 10px; 
+    }
+
+    .folder {
+     
+      padding: 5px; 
+      margin: 0; 
+    }
+
+    
+    .folder i {
+      font-size: 8rem; 
+    }
+
+    
+    .button-group {
+      margin-top: -4.5vh;
+      display: flex;
+      flex-direction: column; 
+      align-items: stretch; 
+    }
+    
+    
+    .button-group .btn {
+      width: 100%;
+      margin-bottom: 1px; 
+    }
+    .back-btn,.name,.search-btn, .input-search{
+      display: none;
+    }
+  }
+</style>
+
+<div class="container mt-3">
+  <div class="name">
+    <h1>Your Folders, {{ user.fname }} {{ user.lname }}</h1>
+  </div>
+    <h5 class="text-end text-danger">{{ msg }}</h5>
+
+    <div class="d-flex justify-content-end">
+        <form action="/searchfolders" class="form-container" method="POST">
+            <input type="text" class="form-control input-search" style="width: 250px;" placeholder="Folder Name" name="query">
+            <button class="btn btn-primary search-btn">Search</button>
+        </form>
+        
+        <form action="/create_folder" class="form-inline" method="POST">
+            <input type="text" class="form-control" name="foldername" placeholder="New Folder" required>
+            <div class="button-group">
+                <button class="btn btn-primary">Create</button>
+                <a href="/deleteallfolder" class="btn btn-danger">Delete All</a>
+                <a href="{{ url_for('views.home') }}">
+                    <button class="btn btn-secondary back-btn">Back</button>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for i in folders %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="position-relative">
+                <a href="/actionfolder/{{ i.id }}">
+                    <button class="btn btn-link">
+                        <img src="{{ url_for('static', filename='img/ellipsis.png') }}" alt="" style="width: 20px; height: auto;">
+                    </button>
+                </a>    
+                <a href="/viewfiles/{{ i.id }}">
+                    <div class="folder text-center">
+                        <i class="fas fa-folder fa-4x mb-1"></i>
+                        <p class="mb-0">{{ i.folder_name }}</p> 
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

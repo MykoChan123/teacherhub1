@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    @media (max-width: 768px) {
+        .card {
+            margin: 10px; /* Add some margin around the card */
+        }
+
+        .d-flex {
+            flex-direction: column; /* Stack the card vertically */
+            align-items: center; /* Center the cards */
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            align-items: center; /* Center buttons */
+        }
+
+        .btn {
+            width: 200px; /* Set a fixed width for all buttons */
+            margin: 5px 0; /* Add some space between buttons */
+        }
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header"><center><b>{{ folders.folder_name }}</b></center></div>
+                    <div class="card-body">
+                        <a href="/renamefolder/{{ folders.id }}">
+                            <button class="btn" style="background-color: lightblue;">Rename</button>
+                        </a>
+                        <a href="/deletefolder/{{ id }}">
+                            <button class="btn" style="background-color: red; color: white;">Delete</button>
+                        </a>
+                        <a href="/setpasswordfolder/{{ id }}">
+                            <button class="btn" style="background-color: rgb(94, 118, 208); color: white;">Set Password</button>
+                        </a>
+                        <a href="/removefolderpassword/{{ id }}">
+                            <button class="btn" style="background-color: rgb(41, 210, 32); color: rgb(33, 47, 37);">Remove Password</button>
+                        </a>
+                        <a href="">
+                            <button class="btn" style="background-color: lightgrey;">Download</button>
+                        </a>
+                        <a href="/folderinfo/{{ folders.id }}">
+                            <button class="btn" style="background-color: gray; color: white;">Info</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

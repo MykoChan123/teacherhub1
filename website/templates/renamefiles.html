@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container d-flex justify-content-around align-items-center mt-5">
+    <div class="jumbotron jumbotron-custom">
+
+        
+        <form action="/renamefiles/{{id}}" method="POST">
+            <div class="form-group">
+                <label for="">File Name:</label>
+                <input type="text" name="rename" class="form-control" placeholder="" value="{{ file.file_name}}">
+                <center>
+                <h3 style="color: red;">{{ warn }}</h3>
+                </center>
+            </div>
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary mr-2">Rename</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

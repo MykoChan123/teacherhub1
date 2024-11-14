@@ -1,0 +1,99 @@
+{% extends 'baseadmin.html' %}
+{% block title %}Security Logs{% endblock %}
+{% block contentadmin %}
+
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header" style="margin-bottom: 100px; margin-top: 500px;">
+            <h1>Security Logs</h1>
+        </div>
+        <div class="card-header" style="margin-bottom: 10px;">
+            Users Activities
+        </div>
+        <div class="card-body" >
+            <div class="d-flex">
+                <!-- First Log Box -->
+                <div class="flex-fill me-2" style="max-width: 50%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <textarea id="logBox1" class="log-box" readonly>
+{% for i in useractivity %}
+[{{i.date}}] {{i.action}}
+{% endfor %}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <br>
+        <div class="card-header" style="margin-bottom: 10px;">
+            Failed Logins
+        </div>
+        <div class="card-body" >
+            <div class="d-flex">
+                <!-- First Log Box -->
+                <div class="flex-fill me-2" style="max-width: 50%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <textarea id="logBox1" class="log-box" readonly>
+{% for i in loginfailed %}
+[{{i.date}}] Failed login Email: {{i.email}}, Password: {{i.password}}
+{% endfor%}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <br>
+<div class="card-header" style="margin-bottom: 10px;">
+            Successfully Logged In
+        </div>
+        <div class="card-body">
+            <div class="d-flex">
+                <!-- First Log Box -->
+                <div class="flex-fill me-2" style="max-width: 50%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <textarea id="logBox1" class="log-box" readonly>
+{% for i in successfullogin %}
+[{{i.date }}] {{ i.fname }} {{ i.lname }} has successfully logged in
+{% endfor %}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+<div class="card-header" style="margin-bottom: 10px;">
+            Sign Out Log
+        </div>
+        <div class="card-body">
+            <div class="d-flex">
+                <!-- First Log Box -->
+                <div class="flex-fill me-2" style="max-width: 50%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <textarea id="logBox1" class="log-box" readonly>
+{% for i in siguotlog %}
+[{{i.date}}] {{ i.fname}} {{ i.lname }} Sign Out
+{% endfor %}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+
+<style>
+    .log-box {
+        width: 100vh;
+        height: 100px; /* Adjust height as needed */
+        overflow-y: auto;
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 5px;
+        border: 1px solid #b7b7b7; /* Optional border for better visibility */
+        font-family: monospace; /* Optional: For a more terminal-like look */
+    }
+</style>
+
+{% endblock %}

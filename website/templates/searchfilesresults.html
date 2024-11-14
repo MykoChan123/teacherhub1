@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <h1 class="text-center"> Results for: {{query}}  in {{folder.folder_name}}</h1>
+
+<div class="d-flex justify-content-end mt-5">
+    <div class="button-back">
+        <a href="{{url_for('views.viewfiles', id=folder.id)}}">
+        <button class="btn btn-secondary">Back</button>
+        </a>
+    </div>
+
+</div>
+</div>
+
+<div class="container mt-1">
+    <div class="table-container">
+        
+        <table class="table table-bordered table-striped">
+            <thead style="background-color: lightblue;">
+                <tr>
+                    <th>Date</th>
+                    <th>Filename</th>
+                </tr>
+            </thead>
+            <tbody>
+                       {% for i in results%}
+                <tr>
+                     
+                    <td> {{i.date}}</td>
+                    <td class="file-name"><a href="/downloadfile/{{i.id}}">{{i.file_name}}</a>
+                        <div class="button-group">
+                        <a href="/renamefiles/{{i.id}}">
+                        <button class="btn btn-primary">Rename</button>
+                        </a>
+                        <a href="/deletefiles/{{i.id}}/{{folder.id}}">
+                        <button class="btn btn-danger">Delete</button>
+                        </a>
+                    </td> 
+                    
+                        </div>
+                           
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+{% endblock %}

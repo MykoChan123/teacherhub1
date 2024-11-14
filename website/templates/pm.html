@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Example</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .user1, .user2 {
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            word-wrap: break-word;
+            max-width: 70%;
+        }
+        .chat-input {
+            display: flex;
+        }
+        .chat-input input {
+            flex: 1;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center">{{ userf }} {{ userl }}</h2>
+                <div class="input-group mb-3">
+                    <form action="/pmsearch/{{pmid}}" method="POST" class="w-100 d-flex">
+                        <input type="text" placeholder="Search all messages" name="query" class="form-control">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="chat-box">
+                    <ul id="txtpm" class="list-unstyled">
+                        {% for i in messages %}
+                        <li class="{{ 'user1' if userid == i.to else 'user2' }}">
+                            <strong>{{i.fname }} {{i.lname }}</strong> : {{ i.msg }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="chat-input mb-3">
+                    <input id="pmtxt" class="form-control" autocomplete="off" placeholder="Type your message here..." />
+                    <button onclick="SendText()" class="btn btn-primary">Send</button>
+                    <a href="{{ url_for('views.teachers') }}" class="btn btn-secondary ml-1">Back</a>
+                    <a href="/viewteacher/{{pmid}}" class="btn btn-secondary ml-1">Files</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var socket = io();
+        const userId = JSON.parse('{{ pmid | tojson | safe }}');
+
+        $(document).ready(function() {
+            startChat(userId);
+        });
+
+        function startChat(chatWith) {
+            socket.emit('start_chat', { chat_with: userId });
+        }
+
+        socket.on('pm', function(data) {
+            $('#txtpm').append($('<li class="user1">').html('<strong>' + data.fname + ' ' + data.lname + '</strong>' + ' : ' + data.msg));
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+        });
+
+        function SendText() {
+            var msg = $('#pmtxt').val();
+            if (msg.trim() !== '') {
+                socket.emit('pm', { msg: msg, to: userId });
+                $('#pmtxt').val('');
+            }
+        }
+    </script>
+</body>
+</html>
+
+{% endblock %}

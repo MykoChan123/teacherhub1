@@ -1,0 +1,115 @@
+{% extends 'baseadmin.html' %}
+{% block titleadmin %}Clear Messages{% endblock %}
+
+{% block contentadmin %}
+
+<style>
+    .container {
+        max-width: 60%; 
+        min-height: 60vh;
+        margin: 50px auto; 
+        padding: 40px; 
+        background-color: #f8f9fa;
+        border-radius: 12px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2rem; 
+        color: #333; 
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ced4da;
+    }
+
+    th {
+        background-color: #007bff; 
+        color: white; 
+    }
+
+    select, button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        margin: 10px 0;
+        border-radius: 8px;
+    }
+
+    select {
+        background-color: #ffffff; 
+        border: 1px solid #ced4da;
+    }
+
+    select:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    button {
+        background-color: #ff4757; 
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease; 
+    }
+
+    button:hover {
+        background-color: #e84118; 
+    }
+
+    .warning {
+        color: red;
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h1>Who Can Login?</h1>
+    <form action="/approveuser" method="POST">
+        <table>
+            <thead>
+                <tr>
+                    <th>Select User</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <select name="teacher" id="teacher">
+                            <option value="All">All</option>
+                            {% for i in users %}
+                            <option value="{{i.id}}">{{i.fname}} {{ i.lname }} || {{i.status}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="action" id="action">
+                            <option value="Allow">Allow</option>
+                            <option value="Disallow">Disallow</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4 class="warning">WARNING: This action will either grant or revoke the user's access to the website based on your selection.</h4>
+
+        <button type="submit">Set</button>
+    </form>
+</div>
+
+{% endblock %}

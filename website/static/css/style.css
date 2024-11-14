@@ -1,0 +1,88 @@
+.file-name {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+.button-group{
+    display: flex;
+    gap: 5px; 
+    margin-left: auto;
+}
+.form-container{
+    display: flex;
+    align-items: right;
+    margin-right: auto;
+
+}
+.profile-button{
+    margin-top: 20px;
+
+}
+.profile p{
+    margin: -1px;
+}
+.profile-card {
+    border: 1px solid #000000;
+    background: linear-gradient(135deg,#8e6ee4 0%, #88d3ce 100%);
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    margin-bottom: 5px;
+}
+.profile-card h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+.profile-card p {
+    border: 1px solid black;
+    background-color: white;
+    margin: 0.5rem 0;
+    overflow-wrap: break-word;
+}
+.profile-card button {
+    border: 1px solid black;
+    margin-top: 1rem;
+}
+.date{
+    width: 150px;
+    white-space: nowrap; 
+}
+
+.nav-link:hover{
+    text-decoration: none;
+    transform: scale(1.1);
+    box-shadow: 0px 10px 10px rgba(243, 0, 0, 0.2);
+    background-color: rgba(143, 143, 143, 0.251);
+    color: white;
+
+}
+.card{
+    border-radius: 20px;
+    background-color: rgb(239, 239, 239);
+}
+.jumbotron-custom{
+    border: 1px solid black;
+    width: 800px;
+}
+.basicinfo{
+    margin-top: 120px;
+    margin-bottom: 200px;
+}
+.chart-border{
+    background-color: white;
+}
+.chart{
+    margin-top: 10%;
+}
+.fade-text {
+    opacity: 0;
+    transition: opacity 5s ease-in-out;
+}
+
+.fade-text.active {
+    opacity: 1;
+}
+

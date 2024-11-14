@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #8e6ee4, #88d3ce);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            margin-top: 3%;
+            max-width: 500px;
+        }
+        .jumbotron-custom {
+            padding: 2rem;
+            border-radius: 1rem;
+            background: #ffffff;
+            text-align: center;
+        }
+        .jumbotron-custom img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .form-control {
+            border-radius: 0.25rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            border-color: #ced4da;
+        }
+        .btn {
+            border-radius: 0.25rem;
+            font-weight: 600;
+            padding: 0.75rem;
+        }
+        .btn-primary {
+            background-color: #6e45e2;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #5a33c5;
+        }
+        .btn-secondary {
+            background-color: #9eb0c2;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #e2e6ea;
+        }
+        .btn-icon {
+            margin-right: 0.5rem;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="jumbotron jumbotron-custom">
+            <img src="{{ url_for('static', filename='img/' ~ website_detail.logo) }}" alt="{{ website_detail.name }}">
+            <h2 class="font-weight-bold mb-3">{{ website_detail.name }}</h2>
+            
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope btn-icon"></i> Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="someone@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock btn-icon"></i> Password</label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="**********" required>
+                    <br>
+                    <a href="/reset-password-teacher" style="color: red;">
+                    <h6>Reset Password</h6>
+                    </a>
+                </div>
+              
+                <p class="text-danger text-center">{{msg}}</p>
+                {% block error_login %} {% endblock %}
+           
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt btn-icon"></i> Log In</button>
+            </form>
+            
+            <div class="mt-3">
+                <a href="{{ url_for('auth.signup') }}" class="btn btn-secondary btn-block"><i class="fas fa-user-plus btn-icon"></i> Sign Up</a>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @media (max-width: 700px){
+        .button-back,.search-btn, .input-search, .rename-btn{
+            display: none;
+        }
+        .table-container{
+            margin-top: 10px;
+        }
+
+    }
+</style>
+<div class="container mt-3">
+    <h2 class="text-center">{{ folder.folder_name }}</h2>
+    <h3 class="text-center" style="color: red;">{{ warn }}</h3>
+
+    <div class="d-flex justify-content-end mt-5">
+        <form action="/searchfiles/{{folder.id}}" class="form-container" METHOD="POST">
+            <input type="text" class="form-control input-search" style="width: 250px;" placeholder="Filename" name="query">
+            <button class="btn btn-primary search-btn">Search</button>
+        </form>
+
+
+        <!-- Only text for upload speed and percentage -->
+        <div id="progressText" class="mt-2" style="display: none; margin-right: 10px; color: green;">
+            <span id="percentComplete">0%</span> - <span id="uploadSpeed">0 Mbps</span>
+        </div>
+
+        <!-- Form for file upload without progress bar -->
+        <div class="btn-group">
+        <form action="/viewfiles/{{ folder.id }}" enctype="multipart/form-data" class="form-inline" METHOD="POST" id="uploadForm">
+            <input type="file" class="form-control" name="file" id="fileInput" required>
+            <button type="submit" class="btn btn-primary mr-1" id="uploadBtn">Upload</button>
+            <a href="/deleteallfiles/{{folder.id}}" class="btn btn-danger">Delete All</a>
+            <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+        </form>
+        </div>
+
+
+
+        <div class="button-back">
+            <a href="{{url_for('views.files')}}">
+                <button class="btn btn-secondary ml-1">Back</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-1">
+    <div class="table-container">
+        <table class="table table-bordered table-striped">
+            <thead style="background-color: lightblue;">
+                <tr>
+                    <th>Date</th>
+                    <th>Filename</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in files %}
+                <tr>
+                    <td><b>{{ i.date }}</b></td>
+                    <td class="file-name"><a href="{{url_for('downloaddata.download' , id=i.id)}}">{{ i.file_name }}</a>
+                        <div class="button-group">
+                            <a href="/renamefiles/{{i.id}}">
+                                <button class="btn btn-primary rename-btn">Rename</button>
+                            </a>
+                            <a href="/deletefiles/{{i.id}}/{{folderid}}">
+                                <button class="btn btn-danger delete-btn">Delete</button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const uploadForm = document.getElementById('uploadForm');
+    const progressText = document.getElementById('progressText');
+    const percentCompleteText = document.getElementById('percentComplete');
+    const uploadSpeedText = document.getElementById('uploadSpeed');
+
+    uploadForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length > 0) {
+            // Show only the text for progress
+            progressText.style.display = 'block';
+
+            const formData = new FormData(uploadForm);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', uploadForm.action, true);
+
+            let startTime = new Date().getTime();
+
+            // Progress event to update only text
+            xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 100;
+                    percentCompleteText.innerText = Math.round(percentComplete) + '%';
+
+                    // Calculate upload speed in Mbps
+                    const currentTime = new Date().getTime();
+                    const timeElapsed = (currentTime - startTime) / 1000; // time in seconds
+                    const bytesPerSecond = event.loaded / timeElapsed;
+                    const mbps = (bytesPerSecond * 8) / (1024 * 1024); // convert to Mbps
+                    uploadSpeedText.innerText = mbps.toFixed(2) + ' Mbps';
+                }
+            };
+
+            // Hide text when upload is done
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    percentCompleteText.innerText = '100%';
+                    setTimeout(() => {
+                        progressText.style.display = 'none';
+                    }, 1000);
+                    location.reload(); // reload the page after upload
+                }
+            };
+
+            xhr.send(formData);
+        }
+    });
+</script>
+
+{% endblock %}

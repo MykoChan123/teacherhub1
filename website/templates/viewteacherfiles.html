@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<style>
+    @media (max-width: 700px){
+        .back-button{
+            display: none;
+        }
+    }
+</style>
+<div class="container mt-3">
+    <h1 class="text-center">{{ folder.folder_name}}</h1>
+
+<div class="d-flex justify-content-end mt-5 mb-5">
+    <form action="/searchteachersfiles/{{ folder.id }}" class="form-container" METHOD="POST">
+        <input type="text" class="form-control" style="width: 250px;" placeholder="Filename" name="query">
+        <button class="btn btn-primary">Search</button>
+    </form>
+
+<div class="button-back">
+    <a href="{{url_for('views.files')}}">
+    <button class="btn btn-secondary ml-1 back-button ">Back</button>
+    </a>
+</div>
+
+
+</div>
+</div>
+
+<div class="container mt-1">
+    <div class="table-container">
+        
+        <table class="table table-bordered table-striped">
+            <thead style="background-color: lightblue;">
+                <tr>
+                    <th>Filename</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                       {% for i in files %}
+                <tr>
+                    <td class="file-name"><a href="{{url_for('downloaddata.download' , id=i.id)}}">{{ i.file_name}}</a>
+                    <td class="date">{{ i.date }}</td>
+                        {% endfor %}
+                </tr>
+
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+{% endblock %}

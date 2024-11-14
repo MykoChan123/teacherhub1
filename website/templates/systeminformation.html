@@ -1,0 +1,72 @@
+{% extends 'baseadmin.html' %}
+<title>{% block titleadmin %}Website Edit{% endblock %}</title>
+
+{% block contentadmin %}
+
+<style>
+    .container {
+        max-width: 60%; 
+        min-height: 60vh; 
+        margin: 50px auto; 
+        padding: 40px; 
+        background-color: #f8f9fa; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+        font-size: 2rem; 
+        color: #333; 
+        
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    input[type="text"], input[type="file"], button {
+        width: 100%; 
+        padding: 15px;
+        margin-top: 10px;
+        font-size: 1.1rem;
+        border-radius: 8px; 
+        border: 1px solid #ced4da;
+    }
+
+    input[type="text"]::placeholder {
+        color: #383d42; 
+    }
+
+    input[type="text"]:focus, input[type="file"]:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+    }
+
+    button {
+        background-color: #007bff; 
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease; 
+        margin-top: 40px;
+    }
+
+    button:hover {
+        background-color: #0056b3; 
+    }
+    h4{
+        margin-bottom: -5px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="title">Edit Website</h1>
+    <form action="/update_website" method="POST" enctype="multipart/form-data">
+        <h4 >Website Name:</h4>
+        <input type="text" name="name" id="" placeholder="Enter website name" value="{{website.name}}">
+        <h4>Image Logo:</h4>
+        <input type="file" name="file" required>
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+{% endblock %}

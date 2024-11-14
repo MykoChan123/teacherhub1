@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+
+<style>
+    .basicinfo{
+        margin-top: 17%;
+        background-color: rgb(0, 0, 0);
+        display: flex;
+        color: rgb(255, 255, 255);
+        font-family: monospace;
+    }
+    .arrowdown{
+        margin-top: -100px;
+        margin-bottom: 300px;
+    }
+
+
+</style>
+<div class="basicinfo" data-aos="fade" data-aos-duration="3000" data-aos-delay="1000">
+    <h1>“Data is not just about numbers; it’s about the stories those numbers tell.” – Unknown</h1>
+    
+</div>
+<div class="arrowdown" data-aos="fade-down" data-aos-duration="3000" data-aos-delay="1000">
+<center>
+<img   src="{{url_for('static', filename='img/double-arrows(1).png')}}" alt="arrow down" style=" width: 100px;">
+</center>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Chart and Interpretation Row -->
+
+<div class="row ">
+    <div class="col-md-8">
+            <div>
+                {{ graph|safe }}
+            </div>
+    </div>
+    <div class="col-md-4 d-flex align-items-center" style="width: 90%;" data-aos="fade" data-aos-duration="1000" data-aos-delay="700">
+        <div class="text-center">
+            <div style="text-align: justify;"> 
+            {%if firstkey and secondkey and pos_min_name %}
+            <p>
+                It shows that the majority of Teachers in this site hold the position of <strong>{{firstkey}}</strong> making up <strong>{{sorted_max}}%</strong>
+                of the total <strong>{{pos_sum}}</strong>. This is followed by <strong>{{secondkey}}</strong>, which accounts for <strong>{{secondvalue}}%</strong> of users.
+                The position with the smallest representation is <strong>{{pos_min_name}}</strong>, comprising only <strong>{{sorted_min}}%</strong> of
+                the user base.</p>
+            {%elif pos_min_name%}
+            <p>Data too small.</p>
+            {% else %}
+            <p>No Data</p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="row chart">
+
+    <div class="col-md-4 d-flex align-items-center" style="top: 190px; left: 10%;" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="500">
+        <div class="text-center">
+            <div style="text-align: justify;">
+                <h4>
+                    There are currently <b>{{teachers_count}}</b> teacher , actively uploading, sharing, and collaborating.
+                </h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-8" style="width: 50%; margin-left: 50%; margin-bottom: 200px;">
+        <div class="card chart-border" style="width: 50%;">
+            <div class="card-body shadow-lg" style="width: 100%;">
+               
+                    <div class="card-header text-center">Total Teachers</div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title display-4">{{ teachers_count }}</h5>
+                        <i class="fas fa-chalkboard-teacher fa-2x text-success"></i>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row chart">
+
+    <div class="col-md-4 d-flex align-items-center" style="top: 190px; left: 50%;" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="500">
+        <div class="text-center">
+            <div style="text-align: justify;">
+                <h4>
+                    Teachers have collectively sent <b> {{pmcount}} </b> of messages, highlighting active communication and engagement across the platform.
+                </h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-8" style="width: 50%; margin-left: 10%; margin-bottom: 200px;">
+        <div class="card chart-border" style="width: 50%;">
+            <div class="card-body shadow-lg" style="width: 100%;">
+               
+                    <div class="card-header text-center">Total messages sent by all teachers</div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title display-4">{{ pmcount }}</h5>
+                        <i class="fas fa-envelope fa-2x text-success"></i>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row chart">
+
+    <div class="col-md-4 d-flex align-items-center" style="top: 190px; left: 10%;" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="500">
+        <div class="text-center">
+            <div style="text-align: justify;">
+                <h4>
+                    All teachers have collectively created over <b> {{folderstotal}}</b> folders, demonstrating strong organizational and collaborative efforts.
+                </h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-8" style="width: 50%; margin-left: 50%; margin-bottom: 200px;">
+        <div class="card chart-border" style="width: 50%;">
+            <div class="card-body shadow-lg" style="width: 100%;">
+               
+                    <div class="card-header text-center">Total Folders created by all teachers</div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title display-4">{{ folderstotal }}</h5>
+                        <i class="fas fa-folder fa-2x text-success"></i>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row chart">
+
+    <div class="col-md-4 d-flex align-items-center" style="top: 190px; left: 50%;" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="500">
+        <div class="text-center">
+            <div style="text-align: justify;">
+                <h4>
+                    The principal has sent out more than <b>{{ announcedtotal }}</b> announcements."
+                </h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-8" style="width: 50%; margin-left: 10%; margin-bottom: 200px;">
+        <div class="card chart-border" style="width: 50%;">
+            <div class="card-body shadow-lg" style="width: 100%;">
+               
+                    <div class="card-header text-center">Total announcements made by Principal</div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title display-4">{{ announcedtotal }}</h5>
+                        <i class="fas fa-bullhorn fa-2x text-success"></i>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="row chart">
+    <div class="col-md-8">
+        <div class="card chart-border">
+            <div class="card-body shadow-lg">
+                {{ graph1|safe }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 d-flex align-items-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
+        <div class="text-center">
+            <div style="text-align: justify;">
+            {% if teacher_max_msg == teacher_min_msg %}
+            <p>It looks like there are only few messages, Please send more message to other teachers to be used in charts</p>
+            {%elif teacher_max_msg and teacher_min_msg %}
+            
+            <p>The bar chart illustrates that <strong>{{teacher_max_msg}}</strong> has the
+                highest message count, with a total of <strong>{{max_msg}}</strong>, exceeding 
+                that of all other users. In contrast, <strong>{{teacher_min_msg}}</strong> has 
+                the lowest message count, totaling <strong>{{min_msg}}</strong>, which is less than 
+                that of any other user, therefore the most engaging Teacher is <strong>{{teacher_max_msg}}</strong>
+                and least engaging Teacher is <strong>{{teacher_min_msg}}</strong> </p>
+            {%else%}
+            <p>Welcome to our dashboard Please Send a message to to other user to show data</p>
+            {%endif%}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row chart">
+
+
+    <div class="col-md-4 d-flex align-items-center" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="500">
+        <div class="text-center" >
+
+            <div style="text-align: justify;">
+            
+            <p>The bar chart illustrates that the user with the highest number of uploads is <strong>{{max_upload_name1}}</strong>,
+                with a total of <strong>{{max_upload}}</strong> uploads. Conversely, the user with the fewest uploads is <strong>{{min_upload_name1}}</strong>,
+                with a total of <strong>{{min_upload}}</strong> uploads. This indicates that <strong>{{max_upload_name1}}</strong> is significantly more active 
+                in sharing files compared to the majority of Teachers in the site, whereas <strong>{{min_upload_name1}}</strong> is less engaged in uploading files.
+            </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 ">
+        <div class="card shadow-lg chart-border" >
+            <div class="card-body">
+                {{ graph2|safe }}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div class="row chart">
+
+    <div class="col-md-8">
+        <div class="card shadow-lg chart-border" style="margin-bottom: 5%;">
+            <div class="card-body">
+                {{ graph_scatter_test|safe }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 d-flex align-items-center">
+        <div class="text-center">
+            <div id="text-container" style="text-align: justify; margin-bottom: 5%;">
+                <div class="fade-text" data-aos="fade" data-aos-duration="1000" data-aos-delay="700">
+                    <p>This 3-dimensional scatter plot shows that when both 
+                    <b>uploaded files</b> and <b>messages sent</b> are 
+                    <strong>high</strong>, a teacher with the position of 
+                    <b>{{high_upload_high_message_teacher}}</b> is 
+                    <strong>much more likely to consistently upload 
+                    files and actively communicate with other teachers</strong>.</p>
+                </div>
+    
+                <div class="fade-text" data-aos="fade" data-aos-duration="1000" data-aos-delay="3000">
+                    <p>In contrast, when both uploads and messages sent are <b>low</b>, 
+                    a teacher with the position of <b>{{low_upload_low_message_teacher}}</b> 
+                    is <b>significantly less likely to participate in conversations with colleagues and upload files</b>.</p>
+                </div>
+    
+                <div class="fade-text" data-aos="fade" data-aos-duration="1000" data-aos-delay="4000">
+                    <p>Furthermore, if the count of uploaded files is <b>high</b> while the message count is <b>low</b>, 
+                    a teacher with the position of <b>{{high_upload_low_message_teacher}}</b> is <b>more likely to 
+                    upload files but shows a reduced tendency to engage in conversations</b>.</p>
+                </div>
+    
+                <div class="fade-text" data-aos="fade" data-aos-duration="1000" data-aos-delay="5000">
+                    <p>Conversely, when the count of messages sent is <b>high</b> and file uploads are <b>low</b>, 
+                    a teacher with the position of <b>{{low_upload_high_message_teacher}}</b> is <b>more inclined to engage in discussions with other teachers
+                    but less likely to upload files</b>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const fadeTexts = document.querySelectorAll('.fade-text');
+    let delay = 0;
+
+    fadeTexts.forEach((element, index) => {
+        setTimeout(() => {
+            element.classList.add('active');
+        }, delay);
+        delay += 2000; 
+    });
+});
+
+</script>
+
+
+{% endblock %}

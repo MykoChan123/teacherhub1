@@ -1,0 +1,101 @@
+{% extends 'baseadmin.html'%}
+{% block title %}view pending announcement{% endblock %}
+{% block contentadmin %}
+<style>
+    .container {
+        max-width: 60%; 
+        min-height: 60vh;
+        margin: 50px auto; 
+        padding: 40px; 
+        background-color: #f8f9fa;
+        border-radius: 12px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2rem; 
+        color: #333; 
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    table {
+        width: 500px;
+        height: 100px;
+        margin-top: 20px;
+        
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ced4da;
+    }
+
+    th {
+        background-color: #007bff; 
+        color: white; 
+    }
+
+    select, button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        margin: 10px 0;
+        border-radius: 8px;
+    }
+
+    select {
+        background-color: #ffffff; 
+        border: 1px solid #ced4da;
+    }
+
+    select:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    button {
+        background-color: #ff4757; 
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease; 
+    }
+
+    button:hover {
+        background-color: #e84118; 
+    }
+
+    .warning {
+        color: red;
+        text-align: center;
+        margin-top: 20px;
+    }
+    p{
+        word-break: break-all;
+    }
+</style>
+
+<div class="container">
+    <h1>{{announcement.title}}</h1>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                       <p>{{announcement.content}}</p>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <a href="{{url_for('admin.approveannouncement')}}"><button class="btn btn-secondary" style="background-color: gray; color: white;">Back</button></a>
+</div>
+{% endblock %}

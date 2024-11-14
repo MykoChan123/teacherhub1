@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Example</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .user1, .user2 {
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            word-wrap: break-word;
+            max-width: 70%;
+        }
+        .chat-input {
+            display: flex;
+        }
+        .chat-input input {
+            flex: 1;
+            margin-right: 5px;
+        }
+        .backbtnsearch{
+            text-align: right;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center">Search Results for: {{ query }}</h2>
+                <div class="input-group mb-3">
+                    <form action="/pmsearch/{{pmid}}" method="POST" class="w-100 d-flex">
+                        <input type="text" placeholder="Search Message" name="query" class="form-control">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="chat-box">
+                    <ul id="txtpm" class="list-unstyled">
+                        {% for i in pmresults %}
+                        <li class="{{ 'user1' if userid == i.to else 'user2' }}">
+                            <strong>{{i.fname }} {{i.lname }}</strong> : {{ i.msg }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="backbtnsearch">
+                    <a href="/pm/{{pmid}}" class="btn btn-secondary ml-1">Back</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <h1 class="text-center">{{user.fname}}  {{user.lname}}'s folders </h1>
+<br>
+<div class="d-flex justify-content-end">
+  
+  <form action="/searchteacherfolders/{{ user.id }}" class="form-container" METHOD="POST">
+    <input type="text" class="form-control" style="width: 250px;" placeholder="Folder Name" name="query">
+    <button class="btn btn-primary">Search</button>
+</form>
+<a href="{{url_for('views.teachers')}}">
+   <button class="btn btn-secondary ml-1">Back</button>
+</a>
+
+</div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+      {% for i in results %}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4"> 
+        <div class="position-relative">
+            <a href="#">
+          <button class="btn btn-link"><img src="{{url_for('static', filename='img/ellipsis.png')}}" alt="" style="width: 20px; height: auto;"></button>
+            </a>    
+          <a href="/viewteacherfiles/{{i.id}}">
+            <div class="folder text-center">
+              <i class="fas fa-folder fa-4x mb-1"></i>
+              <p class="mb-0">{{ i.folder_name }}</p> 
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+{% endblock%}

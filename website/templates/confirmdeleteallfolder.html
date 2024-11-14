@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-around align-items-center mt-5">
+    <div class="jumbotron jumbotron-custom " style="width: 300px;">
+
+        <div class="text-center">
+        <h4 class="font-weight-bold">Confirm Deletion</h4>
+        <p>To confirm delete, use your account password!</p>
+        </div>
+        
+    <form action="/deleteallfolder" METHOD="POST">
+
+        <div class="col">
+        <div class="row">
+        <label for="" class="form-label">Password</label>
+        <input type="password" name="password" id="" class="form-control" placeholder="Your Password" required>
+        <label for="" class="form-label">Confirm Password</label>
+        <input type="password" name="confirm_password" id="" class="form-control" placeholder="Confirm Password" required>
+        </div>
+
+        <br/>
+        <div class="text-center">
+            <p class="text-danger"> {{ messages }}</p>
+        <button type="submit" class="btn btn-danger ">Delete All</button>
+        </div>
+    </form>
+    
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

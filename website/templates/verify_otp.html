@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{email}}</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #8e6ee4, #88d3ce);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 450px; 
+            width: 90%; 
+            padding: 3rem; 
+            border-radius: 1rem;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            box-sizing: border-box; 
+        }
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #6e45e2;
+            font-size: 1.5rem;
+        }
+        label {
+            display: block;
+            font-size: 1rem; 
+            font-weight: 500;
+            margin-bottom: 1rem;
+            text-align: left; 
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem; 
+            border-radius: 0.5rem; 
+            border: 1px solid #ced4da;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; 
+            font-size: 1rem; 
+        }
+        button {
+            width: 100%;
+            padding: 1rem; 
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            background-color: #6e45e2;
+            color: white;
+            font-size: 1rem; 
+            cursor: pointer;
+            transition: background-color 0.3s ease; 
+        }
+        button:hover {
+            background-color: #5a33c5;
+        }
+        p {
+            margin-top: 1.5rem; 
+            font-size: 0.9rem; 
+            color: #d9534f;
+            font-weight: 500; 
+        }
+        .footer {
+            margin-top: 2rem; 
+            font-size: 0.8rem; 
+            color: #888; 
+        }
+        .countdown {
+            margin: 1.5rem 0; 
+            font-size: 1.2rem; 
+            color: #dc3545; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Almost There, <div style="color: black;">{{fullname}}!</div></h2>
+        <p>We’ve sent a One-Time Password (OTP) to your email.</p>
+        {% if msg %}
+        {% else %}
+        <div class="countdown" id="countdown">Time Remaining: <span id="time">5:00</span></div>
+        {% endif %}
+        
+        <form action="/verify_otp" method="POST">
+            <label for="otp">Enter the OTP sent to: <b>{{email}}</b></label>
+            <input type="text" name="otp" id="otp" placeholder="Enter your OTP" required>
+            {% if msg %}
+            <p style="margin-top: -5%; font-size: 1.5rem;">{{ msg }}</p>
+            </b>
+            {% endif %}
+            <button type="submit">Verify OTP</button>
+
+        </form>
+        
+        <div>
+            <button id="resendButton" onclick="resendOTP()" style="background-color: #888; margin-top: 5px;">Resend</button>
+            <span id="resendCountdown" style="display: none;"> (Resend available in <span id="resendTime">30</span> seconds)</span>
+        </div>
+
+        <div class="footer">
+            <p>If you didn't receive the email, check your spam folder.</p>
+        </div>
+    </div>
+
+    <script>
+        let timeLimit = 300; 
+        const countdownElement = document.getElementById("time");
+        const resendButton = document.getElementById("resendButton");
+        const resendCountdownElement = document.getElementById("resendCountdown");
+        const resendTimeElement = document.getElementById("resendTime");
+        let resendTimeout;
+
+        const updateCountdown = () => {
+            const minutes = Math.floor(timeLimit / 60);
+            const seconds = timeLimit % 60;
+
+            countdownElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            if (timeLimit > 0) {
+                timeLimit--;
+            } else {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = "EXPIRED";
+                document.querySelector("form").reset();
+            }
+        };
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        function resendOTP() {
+            // Disable the resend button
+            resendButton.disabled = true;
+            resendCountdownElement.style.display = "inline";
+
+            // Set the countdown for resend button
+            let resendTime = 30; // countdown time in seconds
+            resendTimeElement.textContent = resendTime;
+
+            resendTimeout = setInterval(() => {
+                resendTime--;
+                resendTimeElement.textContent = resendTime;
+
+                if (resendTime <= 0) {
+                    clearInterval(resendTimeout);
+                    resendButton.disabled = false; // Enable the button
+                    resendCountdownElement.style.display = "none"; // Hide the countdown
+                }
+            }, 1000);
+
+            // AJAX request to resend OTP
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/resend_otp", true); 
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Sending email for OTP resending
+            xhr.send(JSON.stringify({ email: "{{email}}" }));
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log("OTP resent successfully to:", "{{email}}");
+                        // You can show a message to the user if needed
+                    } else {
+                        console.error("Error resending OTP:", xhr.responseText);
+                    }
+                }
+            };
+        }
+    </script>
+</body>
+</html>

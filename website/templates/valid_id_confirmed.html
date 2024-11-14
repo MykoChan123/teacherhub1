@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: #f5f6fa;
+                font-family: Arial, sans-serif;
+                color: #333;
+            }
+            .container {
+                max-width: 600px;
+                margin: 50px auto;
+                background-color: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+                background-color: #4a2c85;
+                color: #ffffff;
+                padding: 20px;
+                text-align: center;
+            }
+            .header h1 {
+                margin: 0;
+                font-size: 28px;
+                font-weight: normal;
+            }
+            .content {
+                padding: 30px;
+            }
+            .content h2 {
+                color: #4a2c85;
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+            .content p {
+                margin: 15px 0;
+                line-height: 1.6;
+            }
+            .button-container {
+                text-align: center;
+                margin: 30px 0;
+            }
+            .button {
+                display: inline-block;
+                padding: 15px 30px;
+                background-color: #4a2c85;
+                color: #ffffff;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+            .button:hover {
+                background-color: #372268;
+            }
+            .footer {
+                background-color: #f5f5f5;
+                padding: 15px;
+                text-align: center;
+                font-size: 14px;
+                color: #777;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Account Verification Complete</h1>
+            </div>
+            <div class="content">
+                <h2>Hi, <b>{{ name }}!</b></h2>
+                <p>We're excited to let you know that your government ID has been verified, and your account details match the information you provided during registration.</p>
+                <p>Your account is now active, and you can now officially log in to our platform to enjoy all the available features and services. Thank you.</p>
+            </div>
+            <div class="footer">
+                <p>Best regards.</p>
+
+            </div>
+        </div>
+    </body>
+</html>

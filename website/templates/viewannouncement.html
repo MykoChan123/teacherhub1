@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Announcement</h1>
+
+    <div class="row justify-content-center">
+        <!-- User Card -->
+        <div class="col-lg-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="mb-0">{{ data.title }}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-justify">{{ data.content }}</p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                {% if data.user__id == user.id %}
+                <a href="{{ url_for('views.deleteannouncement', id=data.id)}}" class="mr-2">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('views.announcement')}}">
+                    <button class="btn btn-secondary btn-sm">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

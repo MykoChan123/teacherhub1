@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  @media (max-width: 700px) {
+    .input-search {
+      max-width: 50%;
+      margin-left: 30%;
+    }
+    .back-button {
+      display: none;
+    }
+  }
+
+  /* Make the folder icon bigger */
+  .folder .image {
+    font-size: 6rem; /* Increase the font size to make the folder image bigger */
+  }
+</style>
+
+<div class="container mt-3">
+    <h1 class="text-center">{{user.fname}}  {{user.lname}}'s folders </h1>
+    <br>
+    <div class="d-flex justify-content-end">
+      <form action="/searchteacherfolders/{{ user.id }}" class="form-container" METHOD="POST">
+        <input type="text" class="form-control input-search" style="width: 250px;" placeholder="Folder Name" name="query">
+        <button class="btn btn-primary">Search</button>
+      </form>
+      <a href="{{url_for('views.teachers')}}">
+        <button class="btn btn-secondary ml-1 back-button">Back</button>
+      </a>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+      {% for i in folders %}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4"> 
+        <div class="position-relative">
+          <a href="/viewteacherfiles/{{i.id}}">
+            <div class="folder text-center">
+              <i class="fas fa-folder fa-6x mb-1 image"></i> <!-- Font size set to 6x for larger icon -->
+              <p class="mb-0">{{ i.folder_name }}</p> 
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

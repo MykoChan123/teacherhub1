@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, #8e6ee4, #88d3ce);
+                color: #333;
+                height: 100vh;
+            }
+            .container {
+                max-width: 500px;
+                margin: auto;
+                margin-top: 10vh;
+                background-color: white;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+                width: 90%;
+            }
+            h2 {
+                color: #4a2c85;
+                margin-bottom: 20px;
+                font-size: 24px;
+                text-align: center;
+            }
+            p {
+                line-height: 1.6;
+                text-align: center;
+                margin: 0 0 15px;
+            }
+            .footer {
+                margin-top: 30px;
+                font-size: 0.9em;
+                color: #777;
+                text-align: center;
+            }
+            .info-message {
+                color: #fff;
+                border: 2px solid #4a2c85;
+                border-radius: 5px;
+                padding: 15px 20px;
+                background-color: #4a2c85;
+                text-align: center;
+                font-size: 18px;
+                margin: 20px auto;
+                width: fit-content;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Password Reset Request</h2>
+            
+            <p>Hello, <b>Admin!</b></p>
+            
+            <p>We received a request to reset your password. To complete this process, please use the OTP code below.</p>
+            <div class="info-message">
+                {{ otp }}
+            </div>
+            <p>If you did not request a password reset, please ignore this email or contact our support team immediately for assistance.</p>
+            <p>Once you enter the correct OTP, you will be directed to set a new password for your account.</p>
+            <div class="footer">
+                <p>Best regards,</p>
+                <p>M.CHAN</p>
+            </div>
+        </div>
+    </body>
+</html>

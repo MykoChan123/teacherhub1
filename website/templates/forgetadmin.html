@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forget Password</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            margin-top: 100px;
+            max-width: 400px;
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .form-control {
+            background-color: #2b2b2b;
+            border: none;
+            color: #fff;
+        }
+        .form-control:focus {
+            background-color: #3a3a3a;
+            border-color: #555;
+        }
+        .btn-primary {
+            background-color: #fff;
+            color: #000;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #ccc;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="login-container text-center">
+                <i class="fa-solid fa-3x fa-envelope mb-2"></i>
+                <form action="/reset_email_admin" method="POST">
+                    <p>Forget Password</p>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <center>
+                    <h4 style="color: red;">{{msg}}</h4>
+                    </center>
+                    <button type="submit" class="btn btn-primary btn-block">Send OTP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

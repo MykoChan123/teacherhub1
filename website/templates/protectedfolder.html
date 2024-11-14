@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+<div style="background-color: #FFC107; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #FF6F00; margin-top: 100px;">
+    <h1 style="color: #D32F2F; text-transform: uppercase;">
+        <i class="fas fa-exclamation-triangle" style="color: #D32F2F;"></i>
+        Warning: Protected Folder
+        <i class="fas fa-exclamation-triangle" style="color: #D32F2F;"></i>
+    </h1>
+    
+    <p style="color: #333; font-weight: bold;">This folder is protected. Please enter the correct password to gain access.</p>
+
+    <form action="/viewteacherfiles/{{ id }}" method="POST" style="margin-top: 20px;">
+        <label for="password" style="font-size: 1.2em; color: #333;">Password:</label><br>
+        <input type="password" name="password" id="password" 
+               style="padding: 10px; font-size: 1em; margin-top: 10px; border: none; border-radius: 5px;">
+        <br>
+        <br>
+        <h4 style="color: red;">{{ msg }} </h4>
+        <br>
+        <br>
+        <button type="submit" 
+                style="background-color: #D32F2F; color: white; padding: 10px 20px; font-size: 1.1em; border: none; border-radius: 5px; cursor: pointer;">
+            Enter
+        </button>
+    </form>
+</div>
+
+{% endblock %}

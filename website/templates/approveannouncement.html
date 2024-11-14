@@ -1,0 +1,130 @@
+{% extends 'baseadmin.html' %}
+{% block titleadmin %}Review Announcements{% endblock %}
+
+{% block contentadmin %}
+
+<style>
+    .container {
+        max-width: 80%; 
+        margin: 50px auto; 
+        padding: 40px; 
+        background-color: #f8f9fa;
+        border-radius: 12px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+        font-size: 2rem; 
+        color: #333; 
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border: 1px solid #ced4da;
+    }
+
+    th {
+        background-color: #007bff; 
+        color: white; 
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    button {
+        padding: 10px 15px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease; 
+    }
+
+    .approve {
+        background-color: #28a745; 
+        color: white;
+        margin-right: 2px;
+    }
+
+    .approve:hover {
+        background-color: #218838; 
+    }
+
+    .disapprove {
+        background-color: #dc3545; 
+        color: white;
+    }
+
+    .disapprove:hover {
+        background-color: #c82333; 
+    }
+
+    .warning {
+        color: red;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .view{
+        background-color: rgb(96, 98, 252);
+        color: white;
+        margin-right: 5px;
+    }
+    th{
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <h3>Pending Announcements</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Announcement</th>
+                <th>Posted By</th>
+                <th>Posted On</th>
+                <th>Actions</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in announcement %}
+            <tr>
+                <td>{{i.title}}</td>
+                <td>{{ i.fullname}}</td>
+                <td>{{i.date_created}}</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="/viewpendingannouncement/{{i.id}}">
+                        <button class="view">View</button>
+                        </a>
+                        <form action="/approveannouncement" method="POST">
+                            <input type="hidden" name="allow" value="{{i.id}}">
+                            <button type="submit" class="approve">Approve</button>
+                        </form>
+                        
+                        <form action="/approveannouncement" method="POST">
+                            <input type="hidden" name="disallow" value="{{i.id}}">
+                            <button type="submit" class="disapprove">Disapprove</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="warning">WARNING: Please review announcements carefully before making a decision.</h4>
+</div>
+
+{% endblock %}

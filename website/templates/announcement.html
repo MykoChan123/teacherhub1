@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4 font-weight-bold">Announcements</h3>
+    <h4>{{msg}}</h4>
+    <ul class="list-group">
+        {% for announcement, user in combined %}
+        {% if announcement.status == 'disallow' %}
+        {% else %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex flex-column flex-grow-1">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="font-weight-bold mb-0"><i class="fa-solid fa-bullhorn"></i> {{ announcement.title }}</h5>
+                    <span class="text-muted">{{ user.fname }} {{ user.lname }}</span>
+                </div>
+                <span class="text-muted">Posted on: {{ announcement.date_created }}</span>
+            </div>
+            <a href="{{ url_for('views.viewannouncement', id=announcement.id) }}" class="ml-3">
+                <button class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</button>
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

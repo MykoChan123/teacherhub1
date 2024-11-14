@@ -1,0 +1,162 @@
+{% extends 'baseadmin.html' %}
+{% block titleadmin %}Manage Positions and Advisory{% endblock %}
+
+{% block contentadmin %}
+
+<style>
+    .container {
+     
+        max-width: 700px; 
+        min-height: 50vh;
+        margin: 50px auto; 
+        padding: 30px; 
+        background-color: #ffffff;
+        border-radius: 12px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        color: #333; 
+        margin-bottom: 30px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        table-layout: fixed; 
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #dee2e6;
+        vertical-align: top;
+        word-wrap: break-word; /* Allows long words to be wrapped to the next line */
+    }
+
+    th {
+        background-color: #007bff; 
+        color: white; 
+        font-size: 1.2rem;
+    }
+
+    td ul {
+        list-style-type: none; 
+        padding: 0; 
+        margin: 0;
+    }
+
+    button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .add-btn {
+        background-color: #28a745; 
+        color: white; 
+    }
+
+    .delete-btn {
+        background-color: #dc3545; 
+        color: white; 
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 5px;
+    }
+
+    .warning {
+        color: red;
+        text-align: center;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2rem; 
+        }
+
+        button {
+            width: 100%;
+            font-size: 0.9rem;
+        }
+    }
+    .advisory {
+        margin-left: 10%;
+    }
+</style>
+
+<div class="container">
+    <h2>Manage Positions and Advisory</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 50%;">Positions</th> 
+                <th style="width: 50%;">Advisory</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <ul>
+                        {% for i in positions%}
+                        <li>{{ i.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for i in advisories %}
+                        <li> {{ i.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="actions">
+        <a href="/addposition">
+            <button class="add-btn">Add Position</button>
+        </a>
+        <a href="/deleteposition">
+            <button class="delete-btn">Delete Position</button>
+        </a>
+        <div class="advisory">
+            <a href="/addadvisory">
+                <button class="add-btn">Add Advisory</button>
+            </a>
+            <a href="/deleteadvisory">
+                <button class="delete-btn">Delete Advisory</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>Warning:</strong> Deleting will permanently remove all
+    </div>
+
+    <div class="actions">
+        <a href="/deleteallpositionadvisory">
+            <button class="delete-btn">Delete All</button>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

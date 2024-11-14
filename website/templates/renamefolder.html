@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header text-center"><b>{{folder.folder_name}}</b></div>
+                <div class="card-body">
+                    <form action="{{url_for('views.renamefolder', id=folder.id)}}" METHOD="POST">
+                    <label for=""> Rename:</label>
+                    <input type="text" name="renamefolder" value="{{ folder.folder_name }}">
+                    <button type="submit" class="btn btn-secondary">Rename</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

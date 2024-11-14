@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .chat-container {
+            height: 90vh;
+            display: flex;
+            margin-left: -10%;
+            margin-right: -9%;
+            margin-bottom: -5px;
+            border: 1px solid #ccc;
+        }
+        .friends-list {
+            width: 25%;
+            overflow-y: auto;
+        }
+        .chat-window {
+            width: 75%;
+            display: flex;
+            margin-bottom: 50px;
+            flex-direction: column;
+            margin-top: 1%;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: #f7f7f7;
+            margin-top: 5px;
+        }
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            height: 355px;
+            width: 100%;
+            overflow-y: scroll;
+            margin-bottom: 1px;
+            background-color: #f9f9f9;
+            word-break: break-all;
+        }
+        #txtpm {
+            padding: 0px;
+            margin-bottom: 0px;
+        }
+        .msg {
+            padding: 10px;
+        }
+        .custom-link {
+            color: black;
+        }
+        .custom-link:hover {
+            text-decoration: none;
+            transform: scale(1.1);
+            font-size: 1.1em;
+            color: black;
+            font-weight: bold;
+        }
+        #friends {
+            border: 2px solid #7f7f7f;
+            margin-top: 10%;
+            height: 450px;
+            width: 100%;
+            overflow-y: scroll;
+            margin-bottom: 1px;
+            border-radius: 20px;
+        }
+        #friends::-webkit-scrollbar {
+            display: none;
+        }
+        #friends {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .media {
+            margin-top: -20px;
+        }
+        .search-form-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .header-search-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px; 
+            background-color: white;
+            border-radius: 5px;
+        }
+        .search-form-container {
+            flex-shrink: 0; 
+        }
+        .infouser {
+            padding: 10px;
+            margin-left: 10px;
+            margin-top: 5px;
+            border: 1px rgb(95, 95, 95) solid;
+            background-color: aliceblue;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row chat-container">
+            <div class="col-md-3 friends-list p-3">
+                <ul class="list-group list-group-flush" id="friends">
+                    {% for i in users %}
+                    <a href="/messages/{{ i.id }}" class="custom-link">
+                        <li class="list-group-item">
+                            <i><img src="{{ url_for('static', filename='profile/'~ (i.img)) if i.img else 'https://asa-groundhandling.com/wp-content/uploads/2019/10/placeholder-person-square.png' }}" class="rounded-circle mb-3" style="height: auto; width: 40px; object-fit: cover;" alt="No Profile"></i> {{ i.fname }} {{ i.lname }}
+                        </li>
+                    </a>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col-md-9 chat-window">
+                <div class="chat-messages">
+                    <div class="header-search-container d-flex align-items-center justify-content">
+                        <div class="infouser">
+                            <h4 class="text-center">
+                                <i><img src="{{ url_for('static', filename='profile/'~ (user.img)) if user.img else 'https://asa-groundhandling.com/wp-content/uploads/2019/10/placeholder-person-square.png' }}" class="rounded-circle mb-3" style="height: auto; width: 30px; object-fit: cover;" alt="No Profile"></i> <strong>{{ userf }} {{ userl }}</strong>
+                            </h4>
+                            <p style="text-align: center; margin-top: -10px;">
+                                <i class="fas fa-briefcase"></i> <strong>{{ position }}</strong>
+                            </p>
+                        </div>
+
+                        <div class="search-form-container">
+                            <form action="/pmsearch/{{ pmid }}" method="POST" class="d-flex">
+                                <input type="text" placeholder="Search all messages" name="query" class="form-control">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="submit">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div id="chat-box">
+                            {% for i in messages %}
+                            <ul id="txtpm" class="list-unstyled">
+                                <li class="msg">
+                                    <strong>{{ i.fname }} {{ i.lname }} </strong>: {{ i.msg }}
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Type a message..." id="pmtxt">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary ml-1" type="button" onclick="SendText()">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                            <a href="/viewteacher/{{ pmid }}">
+                                <button class="btn btn-secondary ml-1">
+                                    <i class="fas fa-file-alt"></i> Files
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var socket = io();
+        const userId = JSON.parse('{{ pmid | tojson | safe }}');
+
+        $(document).ready(function() {
+            startChat(userId);
+        });
+
+        function startChat(chatWith) {
+            socket.emit('start_chat', { chat_with: userId });
+        }
+
+        socket.on('pm', function(data) {
+            $('#txtpm').append($('<li class="msg">').html('<strong>' + data.fname + ' ' + data.lname + '</strong>' + ' : ' + data.msg));
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+            $('#friends').scrollTop($('#friends')[0].scrollHeight);
+        });
+
+        function SendText() {
+            var msg = $('#pmtxt').val();
+            if (msg.trim() !== '') {
+                socket.emit('pm', { msg: msg, to: userId });
+                $('#pmtxt').val('');
+            }
+        }
+    </script>
+</body>
+</html>
+
+{% endblock %}
