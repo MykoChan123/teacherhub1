@@ -19,7 +19,7 @@ def Server():
     app = Flask(__name__)
     logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:mykochan@localhost:5432/teacherhub'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:BUijabvIDZbGTKpGbWocmPTxVjBbKiMG@postgres.railway.internal:5432/railway'
     app.config['SECRET_KEY'] = 'myko chan'
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
